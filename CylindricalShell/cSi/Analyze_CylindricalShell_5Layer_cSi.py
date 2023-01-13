@@ -50,6 +50,7 @@ pl.plot(lam, R4, label = "2.0um")
 pl.plot(lam, R5, label = "2.5um")
 pl.xlabel("wavelength[nm]")
 pl.ylabel("R")
+pl.title("Cylindrical Shell (cSi)")
 pl.legend()
 
 
@@ -60,3 +61,4 @@ pl.figure(2)
 pl.plot(rad, Rm)
 pl.xlabel("Core Radius[um]")
 pl.ylabel("Rmax")
+pl.title("Cylindrical Shell (cSi)")
