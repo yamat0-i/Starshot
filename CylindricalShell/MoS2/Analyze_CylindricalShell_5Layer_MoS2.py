@@ -7,6 +7,7 @@ Created on Mon Dec 26 11:34:27 2022
 
 import numpy as np
 import matplotlib.pyplot as pl
+from scipy.optimize import curve_fit
 
 pl.close("all")
 
@@ -57,8 +58,44 @@ pl.legend()
 rad = [rad1, rad2, rad3, rad4, rad5]
 Rm = [Rm1, Rm2, Rm3, Rm4, Rm5]
 
+
 pl.figure(2)
 pl.plot(rad, Rm)
 pl.xlabel("Core Radius[um]")
 pl.ylabel("Rmax")
 pl.title("Cylindrical Shell (MoS2)")
+
+#Fitting(y = b*x^a)
+def exp_func_log(x, a, b):
+    return a * np.log(x) + np.log(b)
+
+def exp_func_log_fit(val1_quan, val2_quan):
+    popt, pcov = curve_fit(exp_func_log, val1_quan, np.log(val2_quan), maxfev=10000, check_finite=False)
+    return exp_func_log(val1_quan, *popt), popt
+
+def log_to_exp(x, a, b):
+    return np.exp(a * np.log(x) + np.log(b))
+
+x = rad
+y = Rm
+y_fit, popt = exp_func_log_fit(x, y)
+y_fit = log_to_exp(x, popt[0], popt[1])
+
+pl.figure(3)
+pl.plot(x, y, label = "obs")
+pl.plot(x, y_fit, label = "fitting")
+pl.xlabel("Core Radius[um]")
+pl.ylabel("Rmax")
+pl.title("Cylindrical Shell (MoS2)")
+pl.legend()
+
+print('a : {},   b : {}'.format(popt[0], popt[1]))
+
+#Smoother curves
+"""
+pl.figure(3)
+x2 = np.linspace(0.50, 2,50, 1000)
+y2 = popt[1] * x2**popt[0]
+pl.plot(x2, y2, label = "model")
+pl.legend()
+"""
