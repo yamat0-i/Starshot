@@ -79,11 +79,10 @@ for num in x:
     list_y.append(1 - popt[1] * np.exp(popt[0] * num**2))
     
 pl.figure(3)
-pl.plot(x, np.array(list_y))
 
 pl.figure(3)
 pl.plot(x, y, label = "obs")
-pl.plot(x, np.array(list_y), label = "fitting")
+#pl.plot(x, np.array(list_y), label = "fitting")
 pl.xlabel("Core Radius[um]")
 pl.ylabel("Rmax")
 pl.title("Cylindrical Shell (MoS2)")
@@ -93,7 +92,8 @@ print('a : {},   b : {}'.format(popt[0], popt[1]))
 
 #Smoother curves
 pl.figure(3)
-x2 = np.linspace(0.50, 2,50, 1000)
+x2 = np.linspace(0.50, 2.50, 1000)
 y2 = 1 - popt[1] * np.exp(popt[0] * x2**2)
-pl.plot(x2, y2, label = "model")
+pl.plot(x2, y2, label = "model\ny = 1 - 0.3exp(-1.3x^2)")
 pl.legend()
+pl.show()

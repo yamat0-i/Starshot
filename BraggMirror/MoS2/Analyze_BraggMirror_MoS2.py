@@ -7,6 +7,7 @@ Created on Mon Dec 26 11:34:27 2022
 
 import numpy as np
 import matplotlib.pyplot as pl
+from scipy.optimize import curve_fit
 
 pl.close("all")
 
@@ -63,3 +64,37 @@ pl.xticks([1, 2, 3, 4, 5])
 pl.xlabel("Number of Layers")
 pl.ylabel("Rmax")
 pl.title("Bragg Mirror (MoS2)")
+
+#Fitting(y = 1 - b*exp(ax^2))
+x = N
+y = Rm
+
+def nonlinear_fit(x, a, b):
+    return  1 - b * np.exp(a * x**2)
+
+popt, cov = curve_fit(nonlinear_fit, x, y)
+
+list_y = []
+for num in x:
+    list_y.append(1 - popt[1] * np.exp(popt[0] * num**2))
+    
+pl.figure(3)
+
+pl.figure(3)
+pl.plot(x, y, label = "obs")
+pl.plot(x, np.array(list_y), label = "fitting")
+pl.xlabel("Core Radius[um]")
+pl.ylabel("Rmax")
+pl.title("Cylindrical Shell (MoS2)")
+pl.legend()
+
+print('a : {},   b : {}'.format(popt[0], popt[1]))
+"""
+#Smoother curves
+pl.figure(3)
+x2 = np.linspace(0.50, 5, 1000)
+y2 = 1 - popt[1] * np.exp(popt[0] * x2**2)
+pl.plot(x2, y2, label = "model\ny = 1 - 0.3exp(-1.3x^2)")
+pl.legend()
+pl.show()
+"""
