@@ -90,10 +90,10 @@ pl.legend()
 
 print('a : {},   b : {}'.format(popt[0], popt[1]))
 
-#Smoother curves
+#Smoother curve
 pl.figure(3)
 x2 = np.linspace(0.50, 2.50, 1000)
 y2 = 1 - popt[1] * np.exp(popt[0] * x2**2)
-pl.plot(x2, y2, label = "model\ny = 1 - 0.3exp(-1.3x^2)")
+pl.plot(x2, y2, label = "model\nRmax = 1 - 0.3exp(-1.3r^2)")
 pl.legend()
 pl.show()
