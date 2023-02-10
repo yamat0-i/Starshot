@@ -18,8 +18,8 @@ rad = D[:, 0]
 P = D[:, 1]
 
 #Plot
-pl.figure()
-pl.plot(rad, P, linestyle = "", marker = ".", label = "FDTD")
+pl.figure(1)
+pl.plot(rad, P, linestyle = "", marker = ".")
 pl.xlabel("Sphere Radius[um]")
 pl.ylabel("Power[W]")
 pl.title("SiO2")
@@ -35,9 +35,13 @@ def nonlinear_fit(x, a, b):
 popt, cov = curve_fit(nonlinear_fit, x, y)
 print('a : {},   b : {}'.format(popt[0], popt[1])) #popt[0]がa,popt[1]がb
 
-pl.figure()
+pl.figure(2)
 x2 = np.linspace(0, 1.65, 1000)
 y2 = popt[1] * np.exp(popt[0] * x2**2)
+pl.plot(rad, P, linestyle = "", marker = ".", label = "obs") #元データ
 pl.plot(x2, y2, label = "model\nPower = bexp(ar^2)") #Fittingした関数のプロット
+pl.xlabel("Sphere Radius[um]")
+pl.ylabel("Power[W]")
+pl.title("SiO2")
 pl.legend()
 pl.show()
