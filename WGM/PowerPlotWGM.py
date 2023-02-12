@@ -13,7 +13,7 @@ from scipy.optimize import curve_fit
 pl.close("all")
 
 #Load Data
-D = np.loadtxt("WGM_SiO2.txt", delimiter = ",", skiprows = 3)
+D = np.loadtxt("WGM_SiO2.txt", delimiter = ",", skiprows = 1)
 rad = D[:, 0]
 P = D[:, 1]
 
