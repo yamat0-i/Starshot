@@ -16,7 +16,7 @@ rho = 2.65 / 1000 * 100**3 # Density of silica in kg / m^3
 c = 2.99e8 # Speed of light
 
 # Parameters
-Delta = 1e-6 # Thickness of sail in m
+Delta = 10e-9 # Thickness of sail in m
 lam = 1e-6 # Wavelength of illumination
 s = 1 # Multiplier of the beam width which gives the radius of the sail
 
