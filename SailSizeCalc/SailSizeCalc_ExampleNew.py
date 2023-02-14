@@ -1,8 +1,9 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Feb 10 16:20:53 2023
+Created on Tue Dec  6 17:46:58 2022
 
-@author: 81809
+@author: mark
 """
 
 import numpy as np
@@ -15,20 +16,18 @@ pl.close("all")
 printAll = True
 
 # Constants
-rho1 = 4800 #Density of MoS2 in kg / m^3
-rho2 = 2320 # Density of silica in kg / m^3
-rho = (rho1 + rho2) /2
+rho = 2320 # Density of silica in kg / m^3
 c = 2.99e8 # Speed of light
 
 # Parameters
 #om0 = 0.5 
 om0 = np.linspace(0.01,0.1,1000) # Beam radius in m
-SA=10 # Sail area[m^2]
+SA=10 # Sail area
 om0 = 4 * np.sqrt(SA/(4 * np.pi)) # Set beam radius to sail radius according to sail area
-Delta = 1e-6 # Thickness of sail in m
-lam = 1e-6 # Wavelength of illumination
+Delta = 10e-9 # Thickness of sail in m
+lam = 0.5e-6 # Wavelength of illumination
 s = 1 # Multiplier of the beam width which gives the radius of the sail
-sr = np.linspace(0.5e-6,5e-6,100)
+sr = np.linspace(10e-9,100e-9,100)
 om0 = s * sr
 
 if printAll:
