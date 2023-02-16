@@ -23,7 +23,7 @@ s = 1 # Multiplier of the beam width which gives the radius of the sail
 vt = 0.1 * c
 
 # Variables
-P = np.linspace(4.5e11,1000e9,1000) # Power in W
+P = np.linspace(4.5e11,2000e9,1000) # Power in W
 
 # Quadratic equation coefficients
 A = 1 - (2 * P) / (s**2 * vt**2 * rho * Delta * c * lam)
@@ -51,5 +51,7 @@ rsp = -(B + np.sqrt(B**2-4 * A * C)) / (2 * A)
 rsm = -(B - np.sqrt(B**2-4 * A * C)) / (2 * A)
 
 pl.figure(2)
-pl.plot(P, rsp, 'r-')
-pl.plot(P, rsm, 'b-')
+pl.plot(P, rsp, 'r-', label = "rs+")
+pl.plot(P, rsm, 'b-', label = "rs-")
+pl.legend()
+pl.show()

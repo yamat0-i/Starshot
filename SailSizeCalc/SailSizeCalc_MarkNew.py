@@ -52,8 +52,10 @@ rsp = -(B + np.sqrt(B**2-4 * A * C)) / (2 * A)
 rsm = -(B - np.sqrt(B**2-4 * A * C)) / (2 * A)
 
 pl.figure(2)
-pl.plot(P, rsp, 'r-')
-pl.plot(P, rsm, 'b-')
+pl.plot(P, rsp, 'r-', label = "rs+")
+pl.plot(P, rsm, 'b-', label = "rs-")
+pl.legend()
+pl.show()
  
 
 
