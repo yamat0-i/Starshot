@@ -25,10 +25,10 @@ c = 2.99e8 # Speed of light
 om0 = np.linspace(0.01,0.1,1000) # Beam radius in m
 SA=10 # Sail area[m^2]
 om0 = 4 * np.sqrt(SA/(4 * np.pi)) # Set beam radius to sail radius according to sail area
-Delta = 1e-6 # Thickness of sail in m
-lam = 1e-6 # Wavelength of illumination
+Delta = 100e-9 # Thickness of sail in m
+lam = 1.5e-6 # Wavelength of illumination
 s = 1 # Multiplier of the beam width which gives the radius of the sail
-sr = np.linspace(0.5e-6,5e-6,100)
+sr = np.linspace(1,3,100)
 om0 = s * sr
 
 if printAll:
@@ -37,7 +37,7 @@ if printAll:
     
 # Variables
 #P = np.linspace(1,1e9,1000) # Power in W
-P = 1000e9
+P = 10e9
 
 # Calculate sail mass
 m = rho * 4/3 * np.pi * (sr**3 - (sr-Delta)**3)
@@ -75,5 +75,5 @@ if printAll:
     
 pl.figure(1)
 pl.plot(2 * sr * 1e9, vf / c, '.-')
-pl.xlabel("Sail diameter (nm)")
+pl.xlabel("Sail diameter")
 pl.ylabel("vf / c")

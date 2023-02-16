@@ -77,8 +77,6 @@ popt, cov = curve_fit(nonlinear_fit, x, y)
 list_y = []
 for num in x:
     list_y.append(1 - popt[1] * np.exp(popt[0] * num**2))
-    
-pl.figure(3)
 
 pl.figure(3)
 pl.plot(x, y, label = "obs")

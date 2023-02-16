@@ -70,10 +70,12 @@ x = N
 y = Rm
 
 def nonlinear_fit(x, a, b):
-    return  1 - b * np.exp(a * x**2)
+    return  1 - b * np.exp(a * x)
 
-popt, cov = curve_fit(nonlinear_fit, x, y)
+c = [1, 0.770567]
 
+popt, cov = curve_fit(nonlinear_fit, x, y, c)
+"""
 list_y = []
 for num in x:
     list_y.append(1 - popt[1] * np.exp(popt[0] * num**2))
@@ -83,18 +85,21 @@ pl.figure(3)
 pl.figure(3)
 pl.plot(x, y, label = "obs")
 pl.plot(x, np.array(list_y), label = "fitting")
-pl.xlabel("Core Radius[um]")
+pl.xlabel("Number of Layers")
 pl.ylabel("Rmax")
-pl.title("Cylindrical Shell (MoS2)")
+pl.title("Bragg Mirror (MoS2)")
 pl.legend()
-
-print('a : {},   b : {}'.format(popt[0], popt[1]))
 """
+print('a : {},   b : {}'.format(popt[0], popt[1]))
+
 #Smoother curves
 pl.figure(3)
+pl.plot(N, Rm, label = "obs", linestyle = "", marker = ".")
 x2 = np.linspace(0.50, 5, 1000)
-y2 = 1 - popt[1] * np.exp(popt[0] * x2**2)
-pl.plot(x2, y2, label = "model\ny = 1 - 0.3exp(-1.3x^2)")
+y2 = 1 - popt[1] * np.exp(popt[0] * x2)
+pl.plot(x2, y2, label = "model")
+pl.xlabel("Number of Layers")
+pl.ylabel("Rmax")
+pl.title("Bragg Mirror (MoS2)")
 pl.legend()
 pl.show()
-"""

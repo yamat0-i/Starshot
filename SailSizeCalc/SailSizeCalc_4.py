@@ -17,23 +17,22 @@ c = 2.99e8 # Speed of light
 
 # Parameters
 Delta = 10e-9 # Thickness of sail in m
-lam = 1e-6 # Wavelength of illumination
+lam = 1.5e-6 # Wavelength of illumination
 s = 1 # Multiplier of the beam width which gives the radius of the sail
 
 vt = 0.1 * c
 
 # Variables
 P = np.linspace(4.5e11,2000e9,1000) # Power in W
-
 # Quadratic equation coefficients
-A = 1 - (2 * P) / (s**2 * vt**2 * rho * Delta * c * lam)
+A = 1 - P / (s**2 * vt**2 * rho * Delta * c * lam)
 print("A")
 print(A)
 
 B = -Delta
 print("B")
 print(B)
-
+            
 C = 1/3 * Delta**2
 print("C")
 print(C)
