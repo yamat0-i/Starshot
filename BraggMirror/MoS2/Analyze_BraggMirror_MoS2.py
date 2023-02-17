@@ -54,9 +54,40 @@ pl.ylabel("R")
 pl.title("Bragg Mirror (MoS2)")
 pl.legend()
 
+#Rmax
+N6 = 1  #Number of Layers
+D6 = np.loadtxt("1LayersBraggMirror_MoS2_1-1.5um.txt", delimiter=",", skiprows=3)
+lam = D6[:,0] * 1e9 #wavelength[nm]
+T6 = D6[:, 1]
+R6 = -T6
+Rm6 = np.max(R6)
 
-N = [N1, N2, N3, N4, N5]
-Rm = [Rm1, Rm2, Rm3, Rm4, Rm5]
+N7 = 2
+D7 = np.loadtxt("2LayersBraggMirror_MoS2_1-1.5um.txt", delimiter=",", skiprows=3)
+T7 = D7[:, 1]
+R7 = -T7
+Rm7 = np.max(R7)
+
+N8 = 3
+D8 = np.loadtxt("3LayersBraggMirror_MoS2_1-1.5um.txt", delimiter=",", skiprows=3)
+T8 = D8[:, 1]
+R8 = -T8
+Rm8 = np.max(R8)
+
+N9 = 4
+D9 = np.loadtxt("4LayersBraggMirror_MoS2_1-1.5um.txt", delimiter=",", skiprows=3)
+T9 = D9[:, 1]
+R9 = -T9
+Rm9 = np.max(R9)
+
+N10 = 5
+D10 = np.loadtxt("5LayersBraggMirror_MoS2_1-1.5um.txt", delimiter=",", skiprows=3)
+T10 = D10[:, 1]
+R10 = -T10
+Rm10 = np.max(R10)
+
+N = [N6, N7, N8, N9, N10]
+Rm = [Rm6, Rm7, Rm8, Rm9, Rm10]
 
 pl.figure(2)
 pl.plot(N, Rm)
@@ -65,7 +96,9 @@ pl.xlabel("Number of Layers")
 pl.ylabel("Rmax")
 pl.title("Bragg Mirror (MoS2)")
 
-#Fitting(y = 1 - b*exp(ax^2))
+
+
+#Fitting(y = 1 - b*exp(ax))
 x = N
 y = Rm
 
@@ -75,21 +108,7 @@ def nonlinear_fit(x, a, b):
 c = [1, 0.770567]
 
 popt, cov = curve_fit(nonlinear_fit, x, y, c)
-"""
-list_y = []
-for num in x:
-    list_y.append(1 - popt[1] * np.exp(popt[0] * num**2))
-    
-pl.figure(3)
 
-pl.figure(3)
-pl.plot(x, y, label = "obs")
-pl.plot(x, np.array(list_y), label = "fitting")
-pl.xlabel("Number of Layers")
-pl.ylabel("Rmax")
-pl.title("Bragg Mirror (MoS2)")
-pl.legend()
-"""
 print('a : {},   b : {}'.format(popt[0], popt[1]))
 
 #Smoother curves
@@ -97,7 +116,7 @@ pl.figure(3)
 pl.plot(N, Rm, label = "obs", linestyle = "", marker = ".")
 x2 = np.linspace(0.50, 5, 1000)
 y2 = 1 - popt[1] * np.exp(popt[0] * x2)
-pl.plot(x2, y2, label = "model")
+pl.plot(x2, y2, label = "model\ny=1 - 1.04exp(-1.38x)")
 pl.xlabel("Number of Layers")
 pl.ylabel("Rmax")
 pl.title("Bragg Mirror (MoS2)")

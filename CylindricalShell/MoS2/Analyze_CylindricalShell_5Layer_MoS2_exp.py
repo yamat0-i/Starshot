@@ -54,10 +54,40 @@ pl.ylabel("R")
 pl.title("Cylindrical Shell (MoS2)")
 pl.legend()
 
+#Rm
+rad6 = 0.5  #Core radius[um]
+D6 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius0.5um_2.txt", delimiter=",", skiprows=3)
+lam = D6[:,0] * 1e9 #wavelength[nm]
+T6 = D6[:, 1]
+R6 = -T6
+Rm6 = np.max(R6)
 
-rad = [rad1, rad2, rad3, rad4, rad5]
-Rm = [Rm1, Rm2, Rm3, Rm4, Rm5]
+rad7 = 1.0
+D7 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius1.0um_2.txt", delimiter=",", skiprows=3)
+T7 = D7[:, 1]
+R7 = -T7
+Rm7 = np.max(R7)
 
+rad8 = 1.5
+D8 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius1.5um_2.txt", delimiter=",", skiprows=3)
+T8 = D8[:, 1]
+R8 = -T8
+Rm8 = np.max(R8)
+
+rad9 = 2.0
+D9 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius2.0um_2.txt", delimiter=",", skiprows=3)
+T9 = D9[:, 1]
+R9 = -T9
+Rm9 = np.max(R9)
+
+rad10 = 2.5
+D10 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius2.5um_2.txt", delimiter=",", skiprows=3)
+T10 = D10[:, 1]
+R10 = -T10
+Rm10 = np.max(R10)
+
+rad = [rad6, rad7, rad8, rad9, rad10]
+Rm = [Rm6, Rm7, Rm8, Rm9, Rm10]
 
 pl.figure(2)
 pl.plot(rad, Rm)
