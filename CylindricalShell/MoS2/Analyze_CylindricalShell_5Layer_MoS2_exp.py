@@ -16,32 +16,26 @@ D1 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius0.5um.txt", delimiter=",", s
 lam = D1[:,0] * 1e9 #wavelength[nm]
 T1 = D1[:, 1]
 R1 = -T1
-Rm1 = np.max(R1)
 
 rad2 = 1.0
 D2 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius1.0um.txt", delimiter=",", skiprows=3)
 T2 = D2[:, 1]
 R2 = -T2
-Rm2 = np.max(R2)
 
 rad3 = 1.5
 D3 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius1.5um.txt", delimiter=",", skiprows=3)
 T3 = D3[:, 1]
 R3 = -T3
-Rm3 = np.max(R3)
 
 rad4 = 2.0
 D4 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius2.0um.txt", delimiter=",", skiprows=3)
 T4 = D4[:, 1]
 R4 = -T4
-Rm4 = np.max(R4)
 
 rad5 = 2.5
 D5 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius2.5um.txt", delimiter=",", skiprows=3)
 T5 = D5[:, 1]
 R5 = -T5
-Rm5 = np.max(R5)
-
 
 pl.figure(1)
 pl.plot(lam, R1, label = "o.5um")
@@ -54,64 +48,26 @@ pl.ylabel("R")
 pl.title("Cylindrical Shell (MoS2)")
 pl.legend()
 
-#Rm
-rad6 = 0.5  #Core radius[um]
-D6 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius0.5um.txt", delimiter=",", skiprows=3, max_rows=13)
-lam = D6[:,0] * 1e9 #wavelength[nm]
-T6 = D6[:, 1]
-R6 = -T6
-Rm6 = np.max(R6)
+#Rm(1.2um)
+rad = [rad1, rad2, rad3, rad4, rad5]
 
-rad7 = 1.0
-D7 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius1.0um.txt", delimiter=",", skiprows=3, max_rows=13)
-T7 = D7[:, 1]
-R7 = -T7
-Rm7 = np.max(R7)
+Rm1 = -D1[6, 1]
+Rm2 = -D2[6, 1]
+Rm3 = -D3[6, 1]
+Rm4 = -D4[6, 1]
+Rm5 = -D5[6, 1]
 
-rad8 = 1.5
-D8 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius1.5um.txt", delimiter=",", skiprows=3, max_rows=13)
-T8 = D8[:, 1]
-R8 = -T8
-Rm8 = np.max(R8)
-
-rad9 = 2.0
-D9 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius2.0um.txt", delimiter=",", skiprows=3, max_rows=13)
-T9 = D9[:, 1]
-R9 = -T9
-Rm9 = np.max(R9)
-
-rad10 = 2.5
-D10 = np.loadtxt("CylindricalShell_5Layer_MoS2_radius2.5um.txt", delimiter=",", skiprows=3, max_rows=13)
-T10 = D10[:, 1]
-R10 = -T10
-Rm10 = np.max(R10)
-
-rad = [rad6, rad7, rad8, rad9, rad10]
-Rm = [Rm6, Rm7, Rm8, Rm9, Rm10]
-
-print("rad")
-print(rad)
-print("Rm")
-print(Rm)
-
-lam6 = 1.1e-6
-lam7 = 1.21e-6
-lam8 = 1.068e-6
-lam9 = 1.1e-6
-lam10 = 1.068e-6
-
-lamave = np.average([lam6, lam7, lam8, lam9, lam10])
-print(lamave)
+Rm = [Rm1, Rm2, Rm3, Rm4, Rm5]
 
 pl.figure(2)
 pl.plot(rad, Rm)
 pl.xlabel("Core Radius[um]")
-pl.ylabel("Rmax")
+pl.ylabel("Rmax(λ=1.2um)")
 pl.title("Cylindrical Shell (MoS2)")
 
 #Fitting(y = 1 - b*exp(ax^2))
 x = rad
-y = [0.672686, 0.777968, 0.847565, 0.905622, 0.918206]
+y = Rm
 
 def nonlinear_fit(x, a, b):
     return  0.92 - b * np.exp(a * x**2)
@@ -120,22 +76,19 @@ popt, cov = curve_fit(nonlinear_fit, x, y)
 
 list_y = []
 for num in x:
-    list_y.append(0.9 - popt[1] * np.exp(popt[0] * num**2))
-
-pl.figure(3)
-pl.plot(x, y, label = "obs", linestyle = "", marker = ".")
-#pl.plot(x, np.array(list_y), label = "fitting")
-pl.xlabel("Core Radius[um]")
-pl.ylabel("Rmax")
-pl.title("Cylindrical Shell (MoS2, 1.2um)")
-pl.legend()
+    list_y.append(0.92 - popt[1] * np.exp(popt[0] * num**2))
 
 print('a : {},   b : {}'.format(popt[0], popt[1]))
 
-#Smoother curve
 pl.figure(3)
+pl.figure(3)
+pl.plot(x, y, label = "obs", linestyle = "", marker = ".")
+#pl.plot(x, np.array(list_y), label = "fitting")
 x2 = np.linspace(0.50, 2.50, 1000)
 y2 = 0.92 - popt[1] * np.exp(popt[0] * x2**2)
-pl.plot(x2, y2, label = "model\ny = 0.9 - 0.29exp(-0.67x^2)")
+pl.plot(x2, y2, label = "model\ny = 0.92 - 0.29exp(-0.79x^2)")
 pl.legend()
+pl.xlabel("Core Radius[um]")
+pl.ylabel("Rmax(λ=1.2um)")
+pl.title("Cylindrical Shell (MoS2)")
 pl.show()
