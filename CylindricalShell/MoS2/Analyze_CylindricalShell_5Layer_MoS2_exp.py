@@ -48,7 +48,7 @@ pl.ylabel("R")
 pl.title("Cylindrical Shell (MoS2)")
 pl.legend()
 
-#Rm(1.2um)
+###Rm(1.2um)
 rad = [rad1, rad2, rad3, rad4, rad5]
 
 Rm1 = -D1[6, 1]
@@ -65,7 +65,7 @@ pl.xlabel("Core Radius[um]")
 pl.ylabel("Rmax(λ=1.2um)")
 pl.title("Cylindrical Shell (MoS2)")
 
-#Fitting(y = 1 - b*exp(ax^2))
+#Fitting(y = 0.92 - b*exp(ax^2))
 x = rad
 y = Rm
 
@@ -81,7 +81,6 @@ for num in x:
 print('a : {},   b : {}'.format(popt[0], popt[1]))
 
 pl.figure(3)
-pl.figure(3)
 pl.plot(x, y, label = "obs", linestyle = "", marker = ".")
 #pl.plot(x, np.array(list_y), label = "fitting")
 x2 = np.linspace(0.50, 2.50, 1000)
@@ -89,6 +88,37 @@ y2 = 0.92 - popt[1] * np.exp(popt[0] * x2**2)
 pl.plot(x2, y2, label = "model\ny = 0.92 - 0.29exp(-0.79x^2)")
 pl.legend()
 pl.xlabel("Core Radius[um]")
-pl.ylabel("Rmax(λ=1.2um)")
+pl.ylabel("Rmax(λ=1200nm)")
+pl.title("Cylindrical Shell (MoS2)")
+pl.show()
+
+###Rm(532nm)
+RM1 = -D1[45, 1]
+RM2 = -D2[45, 1]
+RM3 = -D3[45, 1]
+RM4 = -D4[45, 1]
+RM5 = -D5[45, 1]
+
+RM = [RM1, RM2, RM3, RM4, RM5]
+
+#Fitting(y = 1 - b*exp(ax^2))
+x = rad
+y = RM
+
+def nonlinear_fit(x, a, b):
+    return  1 - b * np.exp(a * x**2)
+
+popt, cov = curve_fit(nonlinear_fit, x, y)
+
+print('a : {},   b : {}'.format(popt[0], popt[1]))
+
+pl.figure(4)
+pl.plot(x, RM, label = "obs", linestyle = "", marker = ".")
+x2 = np.linspace(0.50, 2.50, 1000)
+y2 = 1 - popt[1] * np.exp(popt[0] * x2**2)
+pl.plot(x2, y2, label = "model\ny = 1 - 0.32exp(-0.86x^2)")
+pl.legend()
+pl.xlabel("Core Radius[um]")
+pl.ylabel("Rmax(λ=532nm)")
 pl.title("Cylindrical Shell (MoS2)")
 pl.show()
